@@ -159,7 +159,7 @@ interface BuilderInterface
      *          'alain', 'tiemblo'
      *      ) ON DUPLICATE KEY UPDATE
      *          `firstname` = 'alain',
-     *          `lastname` = 'TIEMBLO'
+     *          `lastname` = 'tiemblo'
      *
      * @param string $table
      * @param array $columnsValues

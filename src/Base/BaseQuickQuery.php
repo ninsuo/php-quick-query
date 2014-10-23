@@ -116,13 +116,15 @@ class BaseQuickQuery
     public function count($table, array $wheres = array ())
     {
         $request = $this->builder->buildCount($table, $wheres);
-        return $this->asSingleField($request, 'count');
+        $results = $this->driver->query($request);
+        return $this->getSingleField($results, 'count');
     }
 
     public function has($table, array $wheres = array ())
     {
         $request = $this->builder->buildHas($table, $wheres);
-        return count($this->asArray($request)) > 0;
+        $results = $this->driver->query($request);
+        return count($results) > 0;
     }
 
     public function insert($table, array $columnsValues, $ignore = false)
@@ -171,13 +173,15 @@ class BaseQuickQuery
     public function columns($table)
     {
         $request = $this->builder->buildDescribe($table);
-        return $this->asArrayField($request, $this->builder->getDescribeField());
+        $results = $this->driver->query($request);
+        return $this->getArrayField($results, $this->builder->getDescribeField());
     }
 
     public function emptyRow($table)
     {
         $request = $this->builder->buildColumns($table);
-        return $this->asAssociativeArrayField($request, $this->builder->getDescribeField(),
+        $results = $this->driver->query($request);
+        return $this->getAssociativeArrayField($results, $this->builder->getDescribeField(),
               $this->builder->getDescribeValue());
     }
 
