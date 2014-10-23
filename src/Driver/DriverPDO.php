@@ -30,6 +30,7 @@ class DriverPDO implements DriverInterface
     public function setBuilder(BuilderInterface $builder)
     {
         $this->builder = $builder;
+        return $this;
     }
 
     /**

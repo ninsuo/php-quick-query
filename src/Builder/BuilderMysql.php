@@ -19,6 +19,7 @@ class BuilderMysql implements BuilderInterface
     public function setDriver(DriverInterface $driver)
     {
         $this->driver = $driver;
+        return $this;
     }
 
     /**
