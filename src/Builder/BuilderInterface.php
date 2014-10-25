@@ -51,7 +51,7 @@ interface BuilderInterface
     public function buildSelect($table, array $wheres = array ());
 
     /**
-     * Builds a COUNT query:
+     * Builds a COUNT query (returns number of rows that matched):
      *
      * Context:
      *
@@ -79,7 +79,7 @@ interface BuilderInterface
     public function buildCount($table, array $wheres = array ());
 
     /**
-     * Builds a HAS query:
+     * Builds a HAS query (should return true if the row exist):
      *
      * Context:
      *

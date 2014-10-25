@@ -102,7 +102,7 @@ class BuilderMysql implements BuilderInterface
             else
             {
                 $request .= ' = ';
-                $request .= $this->driver->escape($value);
+                $request .= $this->driver->escapeValue($value);
             }
         }
 
@@ -323,7 +323,7 @@ class BuilderMysql implements BuilderInterface
         $request = '';
 
         $request .= "SHOW TABLES LIKE ";
-        $request .= $this->driver->escape($table);
+        $request .= $this->driver->escapeValue($table);
 
         return $request;
     }

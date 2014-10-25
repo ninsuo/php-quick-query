@@ -15,7 +15,7 @@ $pdo->query("
     CREATE TABLE user (
       id INT NOT NULL PRIMARY KEY auto_increment,
       lastname VARCHAR(32) NOT NULL UNIQUE,
-      firstname VARCHAR(32) NOT NULL
+      firstname VARCHAR(32) NOT NULL DEFAULT 'Bob'
     )
 ");
 
@@ -31,11 +31,7 @@ $db->user->insert(array (
 /*
  * Equivalent to:
  *
- *      INSERT INTO `user` (
- *          `firstname`, `lastname`
- *      ) VALUES (
- *           'alain', 'tiemblo'
- *      )
+ *      INSERT INTO `user` ( `firstname`, `lastname`) VALUES ( 'alain', 'tiemblo' )
  *
  */
 
@@ -51,11 +47,7 @@ $db->user->insert(array (
 /*
  * Equivalent to:
  *
- *      INSERT IGNORE INTO `user` (
- *          `firstname`, `lastname`
- *      ) VALUES (
- *           'mickael', 'steller'
- *      )
+ *      INSERT IGNORE INTO `user` ( `firstname`, `lastname` ) VALUES ( 'mickael', 'steller' )
  *
  */
 
@@ -71,11 +63,7 @@ $db->user->insertUpdate(array (
 /*
  * Equivalent to:
  *
- *      INSERT IGNORE INTO `user` (
- *          `firstname`, `lastname`
- *      ) VALUES (
- *           'mickael', 'steller'
- *      )
+ *      INSERT IGNORE INTO `user` (`firstname`, `lastname` ) VALUES ( 'mickael', 'steller' )
  *
  */
 
@@ -91,13 +79,8 @@ $db->user->insertUpdate(array (
 /*
  * Equivalent to:
  *
- *      INSERT INTO `user` (
- *          `firstname`, `lastname`
- *      ) VALUES (
- *          'alain', 'tiemblo'
- *      ) ON DUPLICATE KEY UPDATE
- *          `firstname` = 'alain',
- *          `lastname` = 'tiemblo'
+ *      INSERT INTO `user` (`firstname`, `lastname` ) VALUES ( 'alain', 'tiemblo' )
+ *      ON DUPLICATE KEY UPDATE `firstname` = 'alain', `lastname` = 'tiemblo'
  *
  */
 
@@ -114,11 +97,7 @@ $db->user->update(array (
 /*
  * Equivalent to:
  *
- *      UPDATE `user`
- *      SET
- *          `firstname` = 'john',
- *      WHERE 1
- *      AND `lastname` = 'steller'
+ *      UPDATE `user` SET `firstname` = 'john' WHERE `lastname` = 'steller'
  *
  */
 
@@ -131,4 +110,83 @@ $user = $db->user->select(array (
         'lastname' => 'tiemblo',
 ));
 
-// to be continued
+/*
+ * Equivalent to:
+ *
+ *      SELECT * FROM `user` WHERE `firstname` = 'alain' AND `lastname` = 'tiemblo'
+ *
+ */
+
+echo sprintf("06 - I selected: %s\n", $user[0]['firstname']);
+
+/* * ******************************************************* * */
+
+$has = $db->user->select(array (
+        'firstname' => 'alain',
+));
+
+/*
+ * Returns true if the following request returns results:
+ *
+ *      SELECT * FROM `user` WHERE `firstname` = 'alain' AND `lastname` = 'tiemblo' LIMIT 1
+ *
+ */
+
+echo sprintf("07 - Does the row exist? %s\n", $has ? 'yes' : 'no');
+
+/* * ******************************************************* * */
+
+$db->user->delete(array (
+        'lastname' => 'steller',
+));
+
+/*
+ * Equivalent to:
+ *
+ *      DELETE FROM `user` WHERE `lastname` = 'steller'
+ *
+ */
+
+echo sprintf("08 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+
+/* * ******************************************************* * */
+
+$db->user->truncate();
+
+/*
+ * Empties the table:
+ *
+ *      TRUNCATE TABLE `user`
+ *
+ */
+
+echo sprintf("09 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+
+/* * ******************************************************* * */
+
+$userExists = $db->user->exists();
+$bobExists = $db->bob->exists();
+
+/*
+ * Returns true if the following query return results:
+ *
+ *      SHOW TABLES LIKE 'user'
+ *
+ */
+
+echo sprintf("10 - Table user exists: %s, and table bob exists: %s\n", $userExists ? 'yes' : 'no', $bobExists ? 'yes' : 'no');
+
+/* * ******************************************************* * */
+
+$describe = $db->user->describe();
+
+/*
+ * Returns the table's description
+ *
+ *      DESCRIBE 'user'
+ *
+ */
+
+
+//$columns
+//$emptyRow
