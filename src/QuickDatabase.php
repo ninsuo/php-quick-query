@@ -18,8 +18,8 @@ class QuickDatabase extends BaseQuickQuery
 
     public function getConnectionId()
     {
-        return $this->driver->query(
-              $this->builder->buildGetConnectionId()
+        return $this->asSingleField(
+              $this->builder->buildGetConnectionId(), 'conn_id'
         );
     }
 

@@ -179,7 +179,7 @@ class BaseQuickQuery
 
     public function emptyRow($table)
     {
-        $request = $this->builder->buildColumns($table);
+        $request = $this->builder->buildDescribe($table);
         $results = $this->driver->query($request);
         return $this->getAssociativeArrayField($results, $this->builder->getDescribeField(),
               $this->builder->getDescribeValue());

@@ -277,7 +277,10 @@ interface BuilderInterface
      *
      * Result:
      *
-     *      TRUNCATE TABLE `user`
+     *      SELECT CONNECTION_ID() AS `conn_id`
+     *
+     * Note that the column name containing the connection id shoud be
+     * named conn_id.
      *
      * @return string
      */
