@@ -77,7 +77,42 @@ If you need samples, you can look at the [demo](https://github.com/ninsuo/php-qu
 Documentation
 -------------
 
- [TOC]
+ 
+
+<!-- toc -->
+
+* [What is QuickQuery ?](#what-is-quickquery)
+* [Installation](#installation)
+  * [Install Composer](#install-composer)
+  * [Add the following to your `composer.json`:](#add-the-following-to-your-composerjson)
+  * [Update](#update)
+* [Basic Usage](#basic-usage)
+* [Documentation](#documentation)
+  * [Querying tables](#querying-tables)
+    * [**Insert data**:](#insert-data)
+    * [**Insert row and ignore duplicate keys**:](#insert-row-and-ignore-duplicate-keys)
+    * [**Insert row and update on duplicate keys**:](#insert-row-and-update-on-duplicate-keys)
+    * [**Update row(s)**:](#update-rows)
+    * [**Select row(s)**:](#select-rows)
+    * [**Delete row(s)**:](#delete-rows)
+    * [**Truncate table**:](#truncate-table)
+    * [**Check if a table exists**:](#check-if-a-table-exists)
+    * [**Describe a table**:](#describe-a-table)
+    * [**Get table columns**:](#get-table-columns)
+    * [**Get an empty row**:](#get-an-empty-row)
+  * [Database queries](#database-queries)
+    * [**Get connection ID**:](#get-connection-id)
+    * [**Begin a transaction**:](#begin-a-transaction)
+    * [**Rollback a transaction**:](#rollback-a-transaction)
+    * [**Commit a transaction**:](#commit-a-transaction)
+    * [**Kill a connection**:](#kill-a-connection)
+  * [Doing native requests (JOIN, GROUP BY and so on...)](#doing-native-requests-join-group-by-and-so-on)
+* [Extending](#extending)
+  * [Driver](#driver)
+  * [Builder](#builder)
+
+<!-- toc stop -->
+
 
 ### Querying tables
 
@@ -432,5 +467,3 @@ If you prefer using `mysqli`, `doctrine`, `codeigniter` or other drivers to acce
 ### Builder
 
 If you are using another database than MySQL, you can implement another query builder by implementing the [BuilderInterface](https://github.com/ninsuo/php-quick-query/Builder/BuilderInterface). It is well documented itself so I'll not get further here.
-
-
