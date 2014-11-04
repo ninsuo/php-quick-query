@@ -23,13 +23,13 @@ $db = new QuickDatabase(new DriverPDO($pdo), new BuilderMysql());
 
 /* * ****************************************************** *
 
-                                    Querying tables
+  Querying tables
 
   Querying tables is no more than using the table as a property of your
   database, and calling the method corresponding to the action you're
   doing.
 
-* * ****************************************************** * */
+ * * ****************************************************** * */
 
 $db->user->insert(array (
         'firstname' => 'alain',
@@ -71,28 +71,12 @@ $db->user->insertUpdate(array (
 /*
  * Equivalent to:
  *
- *      INSERT IGNORE INTO `user` (`firstname`, `lastname` ) VALUES ( 'mickael', 'steller' )
+ *      INSERT INTO `user` (`firstname`, `lastname` ) VALUES ( 'mike', 'steller' )
+ *      ON DUPLICATE KEY UPDATE `firstname` = 'mike', `lastname` = 'steller'
  *
  */
 
 echo sprintf("03 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
-
-/* * ******************************************************* * */
-
-$db->user->insertUpdate(array (
-        'firstname' => 'mike',
-        'lastname' => 'steller',
-));
-
-/*
- * Equivalent to:
- *
- *      INSERT INTO `user` (`firstname`, `lastname` ) VALUES ( 'alain', 'tiemblo' )
- *      ON DUPLICATE KEY UPDATE `firstname` = 'alain', `lastname` = 'tiemblo'
- *
- */
-
-echo sprintf("04 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -109,7 +93,7 @@ $db->user->update(array (
  *
  */
 
-echo sprintf("05 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("04 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -125,13 +109,13 @@ $user = $db->user->select(array (
  *
  */
 
-echo sprintf("06 - I selected: %s\n", $user[0]['firstname']);
+echo sprintf("05 - I selected: %s\n", $user[0]['firstname']);
 
 /* * ******************************************************* * */
 
-$has = $db->user->select(array (
+$has = $db->user->has(array (
         'firstname' => 'alain',
-));
+   ));
 
 /*
  * Returns true if the following request returns results:
@@ -140,7 +124,7 @@ $has = $db->user->select(array (
  *
  */
 
-echo sprintf("07 - Does the row exist? %s\n", $has ? 'yes' : 'no');
+echo sprintf("06 - Does the row exist? %s\n", $has ? 'yes' : 'no');
 
 /* * ******************************************************* * */
 
@@ -155,7 +139,7 @@ $db->user->delete(array (
  *
  */
 
-echo sprintf("08 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("07 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -168,7 +152,7 @@ $db->user->truncate();
  *
  */
 
-echo sprintf("09 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("08 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -182,7 +166,8 @@ $bobExists = $db->bob->exists();
  *
  */
 
-echo sprintf("10 - Table user exists: %s, and table bob exists: %s\n", $userExists ? 'yes' : 'no', $bobExists ? 'yes' : 'no');
+echo sprintf("09 - Table user exists: %s, and table bob exists: %s\n", $userExists ? 'yes' : 'no',
+   $bobExists ? 'yes' : 'no');
 
 /* * ******************************************************* * */
 
@@ -195,7 +180,7 @@ $describe = $db->user->describe();
  *
  */
 
-echo sprintf("11 - Table user has %d columns:\n", count($describe));
+echo sprintf("10 - Table user has %d columns:\n", count($describe));
 foreach ($describe as $column)
 {
     echo sprintf("- Column %s of type %s\n", $column['Field'], $column['Type']);
@@ -212,7 +197,7 @@ $columns = $db->user->columns();
  *
  */
 
-echo sprintf("12 - Table user has %d columns: %s.\n", count($columns), implode(', ', $columns));
+echo sprintf("11 - Table user has %d columns: %s.\n", count($columns), implode(', ', $columns));
 
 /* * ******************************************************* * */
 
@@ -227,7 +212,7 @@ $empty = $db->user->emptyRow();
  *
  */
 
-echo "13 - An empty row of the user table looks like this:\n";
+echo "12 - An empty row of the user table looks like this:\n";
 
 var_dump($empty);
 
@@ -235,20 +220,20 @@ var_dump($empty);
 
   All table methods are also available using the $db->method('table', parameters) format.
   For example, instead of:
-     $db->user->select(array('user_id' => 42))
+  $db->user->select(array('user_id' => 42))
   you can use:
-     $db->select('user', array('user_id' => 42))
+  $db->select('user', array('user_id' => 42))
 
  * * ****************************************************** * */
 
 /* * ****************************************************** *
 
-                                    Querying database
+  Querying database
 
-   Other methods are available on the $db object, to do some general
-   actions.
+  Other methods are available on the $db object, to do some general
+  actions.
 
-* * ****************************************************** * */
+ * * ****************************************************** * */
 
 $conn_id = $db->getConnectionId();
 
@@ -259,7 +244,7 @@ $conn_id = $db->getConnectionId();
  *
  */
 
-echo sprintf("14 - Connection id = %d\n", $conn_id);
+echo sprintf("13 - Connection id = %d\n", $conn_id);
 
 /* * ******************************************************* * */
 
@@ -267,9 +252,9 @@ $db->begin();
 
 for ($i = 0; ($i < 10); $i++)
 {
-    $db->user->insert(array(
-         'firstname' => "first{$i}",
-         'lastname' => "last{$i}",
+    $db->user->insert(array (
+            'firstname' => "first{$i}",
+            'lastname' => "last{$i}",
     ));
 }
 
@@ -286,7 +271,7 @@ $db->rollback();
  *
  */
 
-echo sprintf("15 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("14 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -294,9 +279,9 @@ $db->begin();
 
 for ($i = 0; ($i < 10); $i++)
 {
-    $db->user->insert(array(
-         'firstname' => "first{$i}",
-         'lastname' => "last{$i}",
+    $db->user->insert(array (
+            'firstname' => "first{$i}",
+            'lastname' => "last{$i}",
     ));
 }
 
@@ -312,15 +297,17 @@ $db->commit();
  *      COMMIT
  */
 
-echo sprintf("16 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("15 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
 try
 {
     $db->kill($conn_id);
-} catch (\PDOException $ex) {
-    echo "17 - Sucide!\n";
+}
+catch (\PDOException $ex)
+{
+    echo "16 - Sucide!\n";
 }
 
 /*

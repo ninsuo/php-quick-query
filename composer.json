@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Quickly query databases without request, nor mapping, nor entities",
     "keywords": [],
-    "homepage": "https://github.com/ninsuo/php-shared-memory",
+    "homepage": "https://github.com/ninsuo/php-quick-query",
     "license": "MIT",
     "authors": [
         {
