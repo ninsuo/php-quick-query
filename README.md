@@ -422,7 +422,7 @@ Note: to select data, you can still use the helpers:
 - `$db->asSingleField('firstname', $request, $param1, $_)` returns a column of the first given row
 
 
-Using another driver than PDO, or another database than MySQL
+Extending
 -------------
 
 ### Driver
