@@ -1,6 +1,11 @@
 QuickQuery Component
 ===================
 
+Disclamer
+------------------------------
+
+This library is not optimized at all and should only be used for **quick & dirty** development (quick maintainance, advanced customer support...)
+
 What is QuickQuery ?
 ------------------------------
 
