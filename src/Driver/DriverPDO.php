@@ -6,15 +6,12 @@ use Fuz\Component\QuickQuery\Builder\BuilderInterface;
 
 class DriverPDO implements DriverInterface
 {
-
     /**
-     *
      * @var \PDO
      */
     protected $dbh;
 
     /**
-     *
      * @var BuilderInterface
      */
     protected $builder;
@@ -30,6 +27,7 @@ class DriverPDO implements DriverInterface
     public function setBuilder(BuilderInterface $builder)
     {
         $this->builder = $builder;
+
         return $this;
     }
 
@@ -39,7 +37,8 @@ class DriverPDO implements DriverInterface
     public function escapeIdentifier($identifier)
     {
         $encloser = $this->builder->getIdentifierEncloser();
-        return $encloser . str_replace($encloser, $encloser . $encloser, $identifier) . $encloser;
+
+        return $encloser.str_replace($encloser, $encloser.$encloser, $identifier).$encloser;
     }
 
     /**
@@ -53,23 +52,20 @@ class DriverPDO implements DriverInterface
     /**
      * {@inheritdoc}
      */
-    public function query($request, array $params = array ())
+    public function query($request, array $params = array())
     {
         $return = null;
 
         $stmt = $this->dbh->prepare($request);
-        if ($stmt === false)
-        {
+        if ($stmt === false) {
             return $return;
         }
 
-        if ($stmt->execute($params) === false)
-        {
+        if ($stmt->execute($params) === false) {
             return $return;
         }
 
-        if ($this->builder->needToReturnResults($request))
-        {
+        if ($this->builder->needToReturnResults($request)) {
             $return = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
@@ -91,5 +87,4 @@ class DriverPDO implements DriverInterface
     {
         return 'PDO';
     }
-
 }

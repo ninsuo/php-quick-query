@@ -6,9 +6,7 @@ use Fuz\Component\QuickQuery\Driver\DriverInterface;
 
 class BuilderMysql implements BuilderInterface
 {
-
     /**
-     *
      * @var DriverInterface
      */
     protected $driver;
@@ -19,30 +17,27 @@ class BuilderMysql implements BuilderInterface
     public function setDriver(DriverInterface $driver)
     {
         $this->driver = $driver;
+
         return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildSelect($table, array $wheres = array ())
+    public function buildSelect($table, array $wheres = array())
     {
         $request = '';
 
-        $request .= "SELECT * FROM ";
+        $request .= 'SELECT * FROM ';
         $request .= $this->driver->escapeIdentifier($table);
-        $request .= " WHERE 1 ";
+        $request .= ' WHERE 1 ';
 
-        foreach ($wheres as $field => $value)
-        {
+        foreach ($wheres as $field => $value) {
             $request .= ' AND ';
             $request .= $this->driver->escapeIdentifier($field);
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= ' IS NULL ';
-            }
-            else
-            {
+            } else {
                 $request .= ' = ';
                 $request .= $this->driver->escapeValue($value);
             }
@@ -54,24 +49,20 @@ class BuilderMysql implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildCount($table, array $wheres = array ())
+    public function buildCount($table, array $wheres = array())
     {
         $request = '';
 
-        $request .= "SELECT COUNT(*) AS `count` FROM ";
+        $request .= 'SELECT COUNT(*) AS `count` FROM ';
         $request .= $this->driver->escapeIdentifier($table);
-        $request .= " WHERE 1 ";
+        $request .= ' WHERE 1 ';
 
-        foreach ($wheres as $field => $value)
-        {
+        foreach ($wheres as $field => $value) {
             $request .= ' AND ';
             $request .= $this->driver->escapeIdentifier($field);
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= ' IS NULL ';
-            }
-            else
-            {
+            } else {
                 $request .= ' = ';
                 $request .= $this->driver->escapeValue($value);
             }
@@ -83,24 +74,20 @@ class BuilderMysql implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildHas($table, array $wheres = array ())
+    public function buildHas($table, array $wheres = array())
     {
         $request = '';
 
-        $request .= "SELECT * FROM ";
+        $request .= 'SELECT * FROM ';
         $request .= $this->driver->escapeIdentifier($table);
-        $request .= " WHERE 1 ";
+        $request .= ' WHERE 1 ';
 
-        foreach ($wheres as $field => $value)
-        {
+        foreach ($wheres as $field => $value) {
             $request .= ' AND ';
             $request .= $this->driver->escapeIdentifier($field);
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= ' IS NULL ';
-            }
-            else
-            {
+            } else {
                 $request .= ' = ';
                 $request .= $this->driver->escapeValue($value);
             }
@@ -119,18 +106,15 @@ class BuilderMysql implements BuilderInterface
         $request = '';
 
         $request .= 'INSERT ';
-        if ($ignore)
-        {
+        if ($ignore) {
             $request .= 'IGNORE ';
         }
         $request .= 'INTO ';
         $request .= $this->driver->escapeIdentifier($table);
         $request .= ' ( ';
 
-        foreach (array_keys($columnsValues) as $key => $column)
-        {
-            if ($key > 0)
-            {
+        foreach (array_keys($columnsValues) as $key => $column) {
+            if ($key > 0) {
                 $request .= ' , ';
             }
             $request .= $this->driver->escapeIdentifier($column);
@@ -138,18 +122,13 @@ class BuilderMysql implements BuilderInterface
 
         $request .= ' ) VALUES ( ';
 
-        foreach (array_values($columnsValues) as $key => $value)
-        {
-            if ($key > 0)
-            {
+        foreach (array_values($columnsValues) as $key => $value) {
+            if ($key > 0) {
                 $request .= ' , ';
             }
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= 'NULL';
-            }
-            else
-            {
+            } else {
                 $request .= $this->driver->escapeValue($value);
             }
         }
@@ -170,10 +149,8 @@ class BuilderMysql implements BuilderInterface
         $request .= $this->driver->escapeIdentifier($table);
         $request .= ' ( ';
 
-        foreach (array_keys($columnsValues) as $key => $column)
-        {
-            if ($key > 0)
-            {
+        foreach (array_keys($columnsValues) as $key => $column) {
+            if ($key > 0) {
                 $request .= ' , ';
             }
             $request .= $this->driver->escapeIdentifier($column);
@@ -181,18 +158,13 @@ class BuilderMysql implements BuilderInterface
 
         $request .= ' ) VALUES ( ';
 
-        foreach (array_values($columnsValues) as $key => $value)
-        {
-            if ($key > 0)
-            {
+        foreach (array_values($columnsValues) as $key => $value) {
+            if ($key > 0) {
                 $request .= ' , ';
             }
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= 'NULL';
-            }
-            else
-            {
+            } else {
                 $request .= $this->driver->escapeValue($value);
             }
         }
@@ -200,23 +172,18 @@ class BuilderMysql implements BuilderInterface
         $request .= ' ) ON DUPLICATE KEY UPDATE ';
 
         $count = 0;
-        foreach ($columnsValues as $column => $value)
-        {
-            if ($count > 0)
-            {
+        foreach ($columnsValues as $column => $value) {
+            if ($count > 0) {
                 $request .= ', ';
             }
             $request .= $this->driver->escapeIdentifier($column);
             $request .= ' = ';
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= 'NULL';
-            }
-            else
-            {
+            } else {
                 $request .= $this->driver->escapeValue($value);
             }
-            $count++;
+            ++$count;
         }
 
         return $request;
@@ -225,7 +192,7 @@ class BuilderMysql implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildUpdate($table, array $columnsValues, array $wheres = array ())
+    public function buildUpdate($table, array $columnsValues, array $wheres = array())
     {
         $request = '';
 
@@ -234,37 +201,28 @@ class BuilderMysql implements BuilderInterface
         $request .= 'SET ';
 
         $count = 0;
-        foreach ($columnsValues as $column => $value)
-        {
-            if ($count > 0)
-            {
+        foreach ($columnsValues as $column => $value) {
+            if ($count > 0) {
                 $request .= ', ';
             }
             $request .= $this->driver->escapeIdentifier($column);
             $request .= ' = ';
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= 'NULL';
-            }
-            else
-            {
+            } else {
                 $request .= $this->driver->escapeValue($value);
             }
-            $count++;
+            ++$count;
         }
 
-        $request .= " WHERE 1 ";
+        $request .= ' WHERE 1 ';
 
-        foreach ($wheres as $field => $value)
-        {
+        foreach ($wheres as $field => $value) {
             $request .= ' AND ';
             $request .= $this->driver->escapeIdentifier($field);
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= ' IS NULL ';
-            }
-            else
-            {
+            } else {
                 $request .= ' = ';
                 $request .= $this->driver->escapeValue($value);
             }
@@ -276,24 +234,20 @@ class BuilderMysql implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildDelete($table, array $wheres = array ())
+    public function buildDelete($table, array $wheres = array())
     {
         $request = '';
 
         $request .= 'DELETE FROM ';
         $request .= $this->driver->escapeIdentifier($table);
-        $request .= " WHERE 1 ";
+        $request .= ' WHERE 1 ';
 
-        foreach ($wheres as $field => $value)
-        {
+        foreach ($wheres as $field => $value) {
             $request .= ' AND ';
             $request .= $this->driver->escapeIdentifier($field);
-            if (is_null($value))
-            {
+            if (is_null($value)) {
                 $request .= ' IS NULL ';
-            }
-            else
-            {
+            } else {
                 $request .= ' = ';
                 $request .= $this->driver->escapeValue($value);
             }
@@ -322,7 +276,7 @@ class BuilderMysql implements BuilderInterface
     {
         $request = '';
 
-        $request .= "SHOW TABLES LIKE ";
+        $request .= 'SHOW TABLES LIKE ';
         $request .= $this->driver->escapeValue($table);
 
         return $request;
@@ -335,7 +289,7 @@ class BuilderMysql implements BuilderInterface
     {
         $request = '';
 
-        $request .= "DESCRIBE ";
+        $request .= 'DESCRIBE ';
         $request .= $this->driver->escapeIdentifier($table);
 
         return $request;
@@ -416,7 +370,7 @@ class BuilderMysql implements BuilderInterface
     public function needToReturnResults($request)
     {
         return (in_array(strtoupper(substr(trim($request), 0, strpos(trim($request), ' '))),
-              array ('SELECT', 'SHOW', 'DESCRIBE')));
+              array('SELECT', 'SHOW', 'DESCRIBE')));
     }
 
     /**
@@ -426,5 +380,4 @@ class BuilderMysql implements BuilderInterface
     {
         return 'mysql';
     }
-
 }

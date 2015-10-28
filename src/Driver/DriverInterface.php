@@ -10,23 +10,24 @@ use Fuz\Component\QuickQuery\Builder\BuilderInterface;
  */
 interface DriverInterface
 {
-
     /**
      * Builder is sometimes required by the driver, for example
      * when escaping an identifier. All databases will use double
      * quote ( " ) to escape an indentifier, where MySQL does use
-     * backtick ( ` )
+     * backtick ( ` ).
      *
      * @param BuilderInterface $builder
+     *
      * @return DriverInterface
      */
     public function setBuilder(BuilderInterface $builder);
 
     /**
      * Escapes an identifier, such as database, table and column
-     * names
+     * names.
      *
      * @param string $identifier
+     *
      * @return string
      */
     public function escapeIdentifier($identifier);
@@ -35,6 +36,7 @@ interface DriverInterface
      * Escapes a value to make it safe against injections.
      *
      * @param string $value
+     *
      * @return string
      */
     public function escapeValue($value);
@@ -47,7 +49,8 @@ interface DriverInterface
      * arrays.
      *
      * @param string $request
-     * @param array $params
+     * @param array  $params
+     *
      * @return null|array
      */
     public function query($request, array $params = array());
@@ -68,5 +71,4 @@ interface DriverInterface
      * @return string
      */
     public function getName();
-
 }

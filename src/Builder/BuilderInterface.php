@@ -14,18 +14,18 @@ use Fuz\Component\QuickQuery\Driver\DriverInterface;
  */
 interface BuilderInterface
 {
-
     /**
      * Driver is mainly used to escape column names
      * and field values properly when building requests.
      *
      * @param DriverInterface $driver
+     *
      * @return BuilderInterface
      */
     public function setDriver(DriverInterface $driver);
 
     /**
-     * Builds a SELECT query:
+     * Builds a SELECT query:.
      *
      * Context:
      *
@@ -45,13 +45,14 @@ interface BuilderInterface
      *      AND `lastname` = 'tiemblo'
      *
      * @param string $table
-     * @param array $wheres
+     * @param array  $wheres
+     *
      * @return string
      */
-    public function buildSelect($table, array $wheres = array ());
+    public function buildSelect($table, array $wheres = array());
 
     /**
-     * Builds a COUNT query (returns number of rows that matched):
+     * Builds a COUNT query (returns number of rows that matched):.
      *
      * Context:
      *
@@ -72,14 +73,15 @@ interface BuilderInterface
      *
      * => The resulting column name must be "count".
      *
-     * @param type $table
+     * @param type  $table
      * @param array $wheres
+     *
      * @return string
      */
-    public function buildCount($table, array $wheres = array ());
+    public function buildCount($table, array $wheres = array());
 
     /**
-     * Builds a HAS query (should return true if the row exist):
+     * Builds a HAS query (should return true if the row exist):.
      *
      * Context:
      *
@@ -88,7 +90,7 @@ interface BuilderInterface
      * - $wheres = array(
      *          'firstname' => 'alain',
      *          'lastname' => 'tiemblo',
-      *    );
+     *    );
      *
      * Result:
      *
@@ -99,14 +101,15 @@ interface BuilderInterface
      *      AND `lastname` = 'tiemblo'
      *      LIMIT 1
      *
-     * @param type $table
+     * @param type  $table
      * @param array $wheres
+     *
      * @return string
      */
-    public function buildHas($table, array $wheres = array ());
+    public function buildHas($table, array $wheres = array());
 
     /**
-     * Builds an INSERT query:
+     * Builds an INSERT query:.
      *
      * Context:
      *
@@ -133,14 +136,15 @@ interface BuilderInterface
      *       duplicate keys are ignored.
      *
      * @param string $table
-     * @param array $columnsValues
-     * @param bool $ignore
+     * @param array  $columnsValues
+     * @param bool   $ignore
+     *
      * @return string
      */
     public function buildInsert($table, array $columnsValues, $ignore = false);
 
     /**
-     * Builds an INSERT ... ON DUPLICATE KEY UPDATE query:
+     * Builds an INSERT ... ON DUPLICATE KEY UPDATE query:.
      *
      * Context:
      *
@@ -162,13 +166,14 @@ interface BuilderInterface
      *          `lastname` = 'tiemblo'
      *
      * @param string $table
-     * @param array $columnsValues
+     * @param array  $columnsValues
+     *
      * @return string
      */
     public function buildInsertUpdate($table, array $columnsValues);
 
     /**
-     * Builds an UPDATE query:
+     * Builds an UPDATE query:.
      *
      * Context:
      *
@@ -193,14 +198,15 @@ interface BuilderInterface
      *      AND `user_id` = '42'
      *
      * @param string $table
-     * @param array $columnsValues
-     * @param array $wheres
+     * @param array  $columnsValues
+     * @param array  $wheres
+     *
      * @return string
      */
-    public function buildUpdate($table, array $columnsValues, array $wheres = array ());
+    public function buildUpdate($table, array $columnsValues, array $wheres = array());
 
     /**
-     * Builds a DELETE query:
+     * Builds a DELETE query:.
      *
      * Context:
      *
@@ -219,13 +225,14 @@ interface BuilderInterface
      *      AND `lastname` = 'tiemblo'
      *
      * @param string $table
-     * @param array $wheres
+     * @param array  $wheres
+     *
      * @return string
      */
-    public function buildDelete($table, array $wheres = array ());
+    public function buildDelete($table, array $wheres = array());
 
     /**
-     * Builds a TRUNCATE query:
+     * Builds a TRUNCATE query:.
      *
      * Context:
      *
@@ -236,6 +243,7 @@ interface BuilderInterface
      *      TRUNCATE TABLE `user`
      *
      * @param string $table
+     *
      * @return string
      */
     public function buildTruncate($table);
@@ -252,12 +260,13 @@ interface BuilderInterface
      *      SHOW TABLES LIKE 'user'
      *
      * @param string $table
+     *
      * @return string
      */
     public function buildExists($table);
 
     /**
-     * Builds a query that will return table's column names
+     * Builds a query that will return table's column names.
      *
      * Context:
      *
@@ -268,12 +277,13 @@ interface BuilderInterface
      *      DESCRIBE `user`
      *
      * @param string $table
+     *
      * @return string
      */
     public function buildDescribe($table);
 
     /**
-     * Builds a query that should return database's connection id
+     * Builds a query that should return database's connection id.
      *
      * Result:
      *
@@ -287,7 +297,7 @@ interface BuilderInterface
     public function buildGetConnectionId();
 
     /**
-     * Builds a query that should return database's connection id
+     * Builds a query that should return database's connection id.
      *
      * Context:
      *
@@ -298,12 +308,13 @@ interface BuilderInterface
      *      KILL '42'
      *
      * @param int $id
+     *
      * @return string
      */
     public function buildKill($id);
 
     /**
-     * Builds a query that begins a transaction
+     * Builds a query that begins a transaction.
      *
      * Result:
      *
@@ -314,7 +325,7 @@ interface BuilderInterface
     public function buildBegin();
 
     /**
-     * Builds a query that rollbacks a transaction
+     * Builds a query that rollbacks a transaction.
      *
      * Result:
      *
@@ -325,7 +336,7 @@ interface BuilderInterface
     public function buildRollback();
 
     /**
-     * Builds a query that commits a transaction
+     * Builds a query that commits a transaction.
      *
      * Result:
      *
@@ -379,6 +390,7 @@ interface BuilderInterface
      * it begins by SELECT, DESCRIBE or SHOW.
      *
      * @param string $request
+     *
      * @return bool
      */
     public function needToReturnResults($request);

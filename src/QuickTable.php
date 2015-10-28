@@ -8,7 +8,6 @@ use Fuz\Component\QuickQuery\Driver\DriverInterface;
 
 class QuickTable extends BaseQuickQuery
 {
-
     protected $table;
 
     public function __construct(DriverInterface $driver, BuilderInterface $builder, $table)
@@ -17,53 +16,59 @@ class QuickTable extends BaseQuickQuery
         $this->table = $table;
     }
 
-    public function select(array $wheres = array ())
+    public function select(array $wheres = array())
     {
         return parent::select($this->table, $wheres);
     }
 
-    public function asSingleRow(array $wheres = array ())
+    public function asSingleRow(array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return parent::getSingleRow($results);
     }
 
-    public function asSingleField($field, array $wheres = array ())
+    public function asSingleField($field, array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return parent::getSingleField($results, $field);
     }
 
-    public function asArray(array $wheres = array ())
+    public function asArray(array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return $results;
     }
 
-    public function asArrayField($field, array $wheres = array ())
+    public function asArrayField($field, array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return parent::getArrayField($results, $field);
     }
 
-    public function asAssociativeArray($key, array $wheres = array ())
+    public function asAssociativeArray($key, array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return parent::getAssociativeArray($results, $key);
     }
 
-    public function asAssociativeArrayField($key, $field, array $wheres = array ())
+    public function asAssociativeArrayField($key, $field, array $wheres = array())
     {
         $results = parent::select($this->table, $wheres);
+
         return parent::getAssociativeArrayField($results, $key, $field);
     }
 
-    public function count(array $wheres = array ())
+    public function count(array $wheres = array())
     {
         return parent::count($this->table, $wheres);
     }
 
-    public function has(array $wheres = array ())
+    public function has(array $wheres = array())
     {
         return parent::has($this->table, $wheres);
     }
@@ -78,12 +83,12 @@ class QuickTable extends BaseQuickQuery
         return parent::insertUpdate($this->table, $columnsValues);
     }
 
-    public function update(array $columnsValues, array $wheres = array ())
+    public function update(array $columnsValues, array $wheres = array())
     {
         return parent::update($this->table, $columnsValues, $wheres);
     }
 
-    public function delete(array $wheres = array ())
+    public function delete(array $wheres = array())
     {
         return parent::delete($this->table, $wheres);
     }
@@ -112,5 +117,4 @@ class QuickTable extends BaseQuickQuery
     {
         return parent::emptyRow($this->table);
     }
-
 }

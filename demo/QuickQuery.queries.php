@@ -1,15 +1,15 @@
 <?php
 
-require(__DIR__ . '/../vendor/autoload.php');
+require __DIR__.'/../vendor/autoload.php';
 
 use Fuz\Component\QuickQuery\QuickDatabase;
 use Fuz\Component\QuickQuery\Driver\DriverPDO;
 use Fuz\Component\QuickQuery\Builder\BuilderMysql;
 
-$pdo = new \PDO("mysql:host=127.0.0.1;port=3306;dbname=test;charset=utf8", 'root', '');
+$pdo = new \PDO('mysql:host=127.0.0.1;port=3306;dbname=test;charset=utf8', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$pdo->query("DROP TABLE user");
+$pdo->query('DROP TABLE user');
 
 $pdo->query("
     CREATE TABLE user (
@@ -31,7 +31,7 @@ $db = new QuickDatabase(new DriverPDO($pdo), new BuilderMysql());
 
  * * ****************************************************** * */
 
-$db->user->insert(array (
+$db->user->insert(array(
         'firstname' => 'alain',
         'lastname' => 'tiemblo',
 ));
@@ -43,11 +43,11 @@ $db->user->insert(array (
  *
  */
 
-echo sprintf("01 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("01 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
-$db->user->insert(array (
+$db->user->insert(array(
         'firstname' => 'mickael',
         'lastname' => 'steller',
    ), true);
@@ -59,11 +59,11 @@ $db->user->insert(array (
  *
  */
 
-echo sprintf("02 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("02 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
-$db->user->insertUpdate(array (
+$db->user->insertUpdate(array(
         'firstname' => 'mike',
         'lastname' => 'steller',
 ));
@@ -76,13 +76,13 @@ $db->user->insertUpdate(array (
  *
  */
 
-echo sprintf("03 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("03 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
-$db->user->update(array (
+$db->user->update(array(
         'firstname' => 'john',
-   ), array (
+   ), array(
         'lastname' => 'steller',
 ));
 
@@ -93,11 +93,11 @@ $db->user->update(array (
  *
  */
 
-echo sprintf("04 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("04 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
-$user = $db->user->select(array (
+$user = $db->user->select(array(
         'firstname' => 'alain',
         'lastname' => 'tiemblo',
 ));
@@ -113,7 +113,7 @@ echo sprintf("05 - I selected: %s\n", $user[0]['firstname']);
 
 /* * ******************************************************* * */
 
-$has = $db->user->has(array (
+$has = $db->user->has(array(
         'firstname' => 'alain',
    ));
 
@@ -128,7 +128,7 @@ echo sprintf("06 - Does the row exist? %s\n", $has ? 'yes' : 'no');
 
 /* * ******************************************************* * */
 
-$db->user->delete(array (
+$db->user->delete(array(
         'lastname' => 'steller',
 ));
 
@@ -139,7 +139,7 @@ $db->user->delete(array (
  *
  */
 
-echo sprintf("07 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("07 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -152,7 +152,7 @@ $db->user->truncate();
  *
  */
 
-echo sprintf("08 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("08 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
@@ -181,8 +181,7 @@ $describe = $db->user->describe();
  */
 
 echo sprintf("10 - Table user has %d columns:\n", count($describe));
-foreach ($describe as $column)
-{
+foreach ($describe as $column) {
     echo sprintf("- Column %s of type %s\n", $column['Field'], $column['Type']);
 }
 
@@ -250,9 +249,8 @@ echo sprintf("13 - Connection id = %d\n", $conn_id);
 
 $db->begin();
 
-for ($i = 0; ($i < 10); $i++)
-{
-    $db->user->insert(array (
+for ($i = 0; ($i < 10); ++$i) {
+    $db->user->insert(array(
             'firstname' => "first{$i}",
             'lastname' => "last{$i}",
     ));
@@ -271,15 +269,14 @@ $db->rollback();
  *
  */
 
-echo sprintf("14 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("14 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
 $db->begin();
 
-for ($i = 0; ($i < 10); $i++)
-{
-    $db->user->insert(array (
+for ($i = 0; ($i < 10); ++$i) {
+    $db->user->insert(array(
             'firstname' => "first{$i}",
             'lastname' => "last{$i}",
     ));
@@ -297,16 +294,13 @@ $db->commit();
  *      COMMIT
  */
 
-echo sprintf("15 - There are %d users: %s\n", $db->user->count(), implode(", ", $db->user->asArrayField('firstname')));
+echo sprintf("15 - There are %d users: %s\n", $db->user->count(), implode(', ', $db->user->asArrayField('firstname')));
 
 /* * ******************************************************* * */
 
-try
-{
+try {
     $db->kill($conn_id);
-}
-catch (\PDOException $ex)
-{
+} catch (\PDOException $ex) {
     echo "16 - Sucide!\n";
 }
 
@@ -316,4 +310,3 @@ catch (\PDOException $ex)
  *      KILL 42
  *
  */
-

@@ -8,7 +8,6 @@ use Fuz\Component\QuickQuery\Driver\DriverInterface;
 
 class QuickDatabase extends BaseQuickQuery
 {
-
     public function __construct(DriverInterface $driver, BuilderInterface $builder)
     {
         parent::__construct($driver, $builder);
@@ -60,5 +59,4 @@ class QuickDatabase extends BaseQuickQuery
     {
         return new QuickTable($this->driver, $this->builder, $table);
     }
-
 }
