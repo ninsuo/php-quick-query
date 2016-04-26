@@ -369,7 +369,7 @@ class BuilderMysql implements BuilderInterface
      */
     public function needToReturnResults($request)
     {
-        return (in_array(strtoupper(substr(trim($request), 0, strpos(trim($request), ' '))),
+        return (in_array(strtoupper(substr(trim($request), 0, strpos(trim(str_replace("\n", ' ', $request)), ' '))),
               array('SELECT', 'SHOW', 'DESCRIBE')));
     }
 
